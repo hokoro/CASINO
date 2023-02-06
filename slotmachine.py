@@ -32,12 +32,12 @@ class slotmachine:
             return present_money + self.coin
         elif slot[0] == slot[1] == slot[2] and slot[0] == self.items[6]:
             self.cursor.execute("UPDATE SLOTMACHINE_TABLE SET money=? WHERE money=?",
-                                (present_money // 2, present_money))
-            return present_money // 2 + self.coin
+                                (int(present_money // 2), present_money))
+            return int(present_money // 2 + self.coin)
         elif slot[0] == slot[1] == slot[2] and slot[0] == self.items[5]:
             self.cursor.execute("UPDATE SLOTMACHINE_TABLE SET money=? WHERE money=?", (
-                present_money % 3, present_money))
-            return present_money // 3 + self.coin
+                int(present_money % 3), present_money))
+            return int(present_money // 3 + self.coin)
         else:
             return 0
 
