@@ -28,17 +28,31 @@ class slotmachine:
             slot.append(random.randint(1, 7))
 
         if slot[0] == slot[1] == slot[2] and slot[0] == self.items[7]:
+            print("슬롯 머신 성공")
             self.cursor.execute("UPDATE SLOTMACHINE_TABLE SET money=? WHERE money=?", (0, present_money))
-            return present_money + self.coin
+            self.connect.commit()
+            return int(present_money[0])+ self.coin
         elif slot[0] == slot[1] == slot[2] and slot[0] == self.items[6]:
+            print("슬롯 머신 성공")
             self.cursor.execute("UPDATE SLOTMACHINE_TABLE SET money=? WHERE money=?",
-                                (int(present_money // 2), present_money))
-            return int(present_money // 2 + self.coin)
+                                (int(int(present_money[0])// 2), present_money))
+            self.connect.commit()
+            return int(int(present_money[0]) // 2 + self.coin)
         elif slot[0] == slot[1] == slot[2] and slot[0] == self.items[5]:
+            print("슬롯 머신 성공")
             self.cursor.execute("UPDATE SLOTMACHINE_TABLE SET money=? WHERE money=?", (
-                int(present_money % 3), present_money))
-            return int(present_money // 3 + self.coin)
+                int(int(present_money[0]) % 3), present_money))
+            self.connect.commit()
+            return int(present_money[0] // 3 + self.coin)
+        elif slot[0] == slot[1] == slot[2] and  slot[0] == self.items[4]:
+            return 100
+
         else:
+            print("슬롯 머신 실패 상금 누적 !!")
+            plus_money = int(present_money[0])
+            self.cursor.execute("UPDATE SLOTMACHINE_TABLE SET money=? WHERE money=?",
+                                (plus_money+self.coin,plus_money))
+            self.connect.commit()
             return 0
 
 
